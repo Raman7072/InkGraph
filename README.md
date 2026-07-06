@@ -170,8 +170,3 @@ Add a `Procfile`:
 web: streamlit run frontend.py --server.port $PORT --server.address 0.0.0.0
 ```
 
----
-
-## 📄 License
-
-MIT
