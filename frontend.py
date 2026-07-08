@@ -197,153 +197,414 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Share+Tech+Mono&family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* Base */
-html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
+/* Base Override */
+html, body, [class*="css"] {
+    font-family: 'Inter', sans-serif;
+    color: #cbd5e1;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: 0.5px;
+}
 
 .stApp {
-    background: linear-gradient(135deg, #0d0f1a 0%, #111827 50%, #0a0e1a 100%);
+    background-color: #0b0d19 !important;
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.1) 0px, transparent 60%),
+        radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.1) 0px, transparent 60%),
+        radial-gradient(at 50% 100%, rgba(45, 212, 191, 0.06) 0px, transparent 60%) !important;
     min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
 }
 
-/* Sidebar */
+/* Soothing floating color blobs */
+.stApp::before {
+    content: '';
+    position: absolute;
+    top: 5%;
+    left: 8%;
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.14) 0%, transparent 70%);
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+    animation: blobFloat 22s infinite ease-in-out alternate;
+}
+
+.stApp::after {
+    content: '';
+    position: absolute;
+    bottom: 10%;
+    right: 8%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(45, 212, 191, 0.1) 0%, transparent 70%);
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+    animation: blobFloat 28s infinite ease-in-out alternate-reverse;
+}
+
+/* Glassmorphic Sidebar styling */
 [data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #0f1629 0%, #111827 100%) !important;
-    border-right: 1px solid rgba(99,102,241,0.2);
+    background: rgba(10, 15, 30, 0.55) !important;
+    backdrop-filter: blur(25px) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.3) !important;
+    z-index: 100;
 }
-[data-testid="stSidebar"] .stTextArea textarea {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(99,102,241,0.3);
-    border-radius: 10px;
-    color: #e2e8f0;
-}
-[data-testid="stSidebar"] .stButton > button {
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 0.6rem 1.2rem;
+
+/* Sidebar header */
+.sidebar-header {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem;
     font-weight: 600;
-    width: 100%;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(99,102,241,0.3);
-}
-[data-testid="stSidebar"] .stButton > button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(99,102,241,0.5);
+    color: #f1f5f9;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 12px;
+    margin-bottom: 22px;
+    letter-spacing: 0.5px;
 }
 
-/* Tabs */
+/* Sidebar Widget labels */
+[data-testid="stSidebar"] label[data-testid="stWidgetLabel"] p,
+label[data-testid="stWidgetLabel"] p {
+    color: #cbd5e1 !important;
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 0.88rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.5px;
+}
+
+/* Text fields and Textareas - Frosted */
+.stTextArea textarea, .stTextInput input, .stDateInput input {
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 10px !important;
+    color: #f1f5f9 !important;
+    font-family: 'Inter', sans-serif !important;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.stTextArea textarea:focus, .stTextInput input:focus, .stDateInput input:focus {
+    background: rgba(255, 255, 255, 0.04) !important;
+    border-color: rgba(165, 180, 252, 0.4) !important; /* Soft Lavender */
+    box-shadow: 0 0 15px rgba(165, 180, 252, 0.15) !important;
+}
+
+/* Primary generate button with soft gradient glow styling */
+[data-testid="stSidebar"] .stButton > button[kind="primary"] {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.75) 0%, rgba(45, 212, 191, 0.75) 100%) !important; /* Indigo to Teal */
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    backdrop-filter: blur(10px) !important;
+    border-radius: 12px !important;
+    padding: 0.7rem 1.4rem !important;
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
+    width: 100% !important;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.15) !important;
+    cursor: pointer;
+}
+
+[data-testid="stSidebar"] .stButton > button[kind="primary"]:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.25), 0 0 15px rgba(45, 212, 191, 0.15) !important;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.9) 0%, rgba(45, 212, 191, 0.9) 100%) !important;
+    border-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+[data-testid="stSidebar"] .stButton > button[kind="primary"]:active {
+    transform: translateY(0px) !important;
+}
+
+/* Secondary Button inside Sidebar (e.g. Load selected blog) */
+[data-testid="stSidebar"] .stButton > button:not([kind="primary"]) {
+    background: rgba(255, 255, 255, 0.03) !important;
+    color: #cbd5e1 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 10px !important;
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    width: 100% !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    cursor: pointer;
+}
+
+[data-testid="stSidebar"] .stButton > button:not([kind="primary"]):hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Radio buttons list in sidebar */
+[data-testid="stRadio"] label {
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 0.9rem !important;
+    color: #94a3b8 !important;
+    transition: all 0.2s ease;
+}
+
+[data-testid="stRadio"] label:hover {
+    color: #ffffff !important;
+}
+
+/* Tabs: Cyber Holographic styling */
 .stTabs [data-baseweb="tab-list"] {
-    background: rgba(15,22,41,0.8);
-    border-radius: 12px;
-    padding: 4px;
-    gap: 4px;
-    border: 1px solid rgba(99,102,241,0.2);
+    background: rgba(255, 255, 255, 0.02) !important;
+    border-radius: 14px !important;
+    padding: 6px !important;
+    gap: 8px !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+    backdrop-filter: blur(10px) !important;
 }
+
 .stTabs [data-baseweb="tab"] {
-    border-radius: 9px;
-    color: #94a3b8;
-    font-weight: 500;
-    padding: 0.5rem 1rem;
-    transition: all 0.2s;
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    border-radius: 10px !important;
+    color: #94a3b8 !important;
+    padding: 0.6rem 1.3rem !important;
+    transition: all 0.3s ease !important;
+    border: 1px solid transparent !important;
 }
+
+.stTabs [data-baseweb="tab"]:hover {
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+}
+
 .stTabs [aria-selected="true"] {
-    background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
-    color: white !important;
-    box-shadow: 0 4px 12px rgba(99,102,241,0.4);
+    background: rgba(99, 102, 241, 0.12) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(99, 102, 241, 0.3) !important;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.15) !important;
 }
 
-/* Cards / containers */
+/* Frosted Glass Panels, Dataframes & Expanders */
 .stDataFrame, [data-testid="stExpander"] {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(99,102,241,0.2);
-    border-radius: 12px;
-    overflow: hidden;
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    border-radius: 14px !important;
+    backdrop-filter: blur(20px) !important;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2) !important;
+    transition: all 0.3s ease !important;
 }
 
-/* Status box */
+[data-testid="stExpander"]:hover {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border-color: rgba(99, 102, 241, 0.2) !important;
+    box-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.08) !important;
+}
+
+/* Status box override */
 [data-testid="stStatus"] {
-    background: rgba(99,102,241,0.08);
-    border: 1px solid rgba(99,102,241,0.3);
-    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 12px !important;
+    color: #cbd5e1 !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15) !important;
 }
 
 /* Download buttons */
 .stDownloadButton > button {
-    background: rgba(99,102,241,0.15);
-    border: 1px solid rgba(99,102,241,0.4);
-    border-radius: 8px;
-    color: #a5b4fc;
-    font-weight: 500;
-    transition: all 0.2s;
-}
-.stDownloadButton > button:hover {
-    background: rgba(99,102,241,0.3);
-    color: white;
-    border-color: #6366f1;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 10px !important;
+    color: #e2e8f0 !important;
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    padding: 0.6rem 1.2rem !important;
+    transition: all 0.3s ease !important;
 }
 
-/* Info / warning / success */
+.stDownloadButton > button:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Custom Alert styling */
 .stAlert {
-    border-radius: 10px;
-    border-left: 4px solid;
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    border-left: 4px solid rgba(99, 102, 241, 0.8) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15) !important;
 }
 
 /* Text */
-h1, h2, h3 { color: #e2e8f0 !important; }
-p, li, label { color: #94a3b8; }
+h1, h2, h3, h4 { color: #ffffff !important; }
+p, li, label, span { color: #cbd5e1; }
 
-/* Text area in logs */
+/* Textarea specifically for event logs */
 .stTextArea textarea {
-    background: rgba(0,0,0,0.3) !important;
-    border: 1px solid rgba(99,102,241,0.2) !important;
-    color: #64748b !important;
+    background: rgba(10, 15, 30, 0.4) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #cbd5e1 !important;
     border-radius: 10px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.78rem;
+    font-family: 'Share Tech Mono', monospace !important;
+    font-size: 0.82rem !important;
 }
 
-/* Scrollbar */
+/* Custom Scrollbars */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.4); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(99,102,241,0.7); }
+::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.1); }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+
+/* Custom Animations & Component Styles */
+.cyber-header {
+    position: relative;
+    padding: 2.5rem 1.5rem;
+    margin-bottom: 2.2rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 18px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2), inset 0 0 20px rgba(255,255,255,0.01);
+    backdrop-filter: blur(25px);
+    overflow: hidden;
+    animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cyber-scanline {
+    position: absolute;
+    top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 60%);
+    animation: rotateLiquid 20s linear infinite;
+    pointer-events: none;
+}
+
+.cyber-title {
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 3rem !important;
+    font-weight: 800 !important;
+    margin: 0 0 0.5rem 0 !important;
+    background: linear-gradient(135deg, #a5b4fc 0%, #818cf8 50%, #2dd4bf 100%);
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    letter-spacing: 0.5px !important;
+}
+
+.cyber-subtitle {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 400;
+    font-size: 0.95rem;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+}
+
+.cyber-badge-container {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.cyber-badge {
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    font-size: 0.75rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cyber-ready-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 24px;
+    padding: 3.5rem 2rem;
+    text-align: center;
+    max-width: 650px;
+    margin: 3.5rem auto;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(20px);
+    animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cyber-ready-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 4px 12px rgba(255, 255, 255, 0.15));
+    animation: float 4s ease-in-out infinite;
+}
+
+.cyber-ready-title {
+    font-family: 'Outfit', sans-serif;
+    color: #ffffff;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.5px;
+}
+
+/* Animations */
+@keyframes rotateLiquid {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes slideUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes blobFloat {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(40px, -30px) scale(1.08); }
+    100% { transform: translate(-30px, 40px) scale(0.95); }
+}
 </style>
 """, unsafe_allow_html=True)
 
 # ── Hero header ──────────────────────────────────────────────
 st.markdown("""
-<div style="
-    text-align: center;
-">
-  <h1 style="
-      font-size: 2.6rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, #6366f1 0%, #a78bfa 50%, #38bdf8 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-  ">✍️ Blog Writing Agent</h1>
-  <p style="color:#64748b; font-size:1rem; margin:0;">
-      Powered by LangGraph
-  </p>
+<div class="cyber-header">
+  <div class="cyber-scanline"></div>
+  <h1 class="cyber-title">Cyber-Writer</h1>
+  <div class="cyber-subtitle">NEURAL BLOG GENERATING AGENT | POWERED BY LANGGRAPH</div>
+  <div class="cyber-badge-container">
+    <span class="cyber-badge">SYSTEM STATUS: ONLINE</span>
+    <span class="cyber-badge" style="border-color: rgba(255,255,255,0.15); color: #cbd5e1;">CORE: ACTIVE</span>
+  </div>
 </div>
-<hr style="border:none; border-top:1px solid rgba(99,102,241,0.2);" />
 """, unsafe_allow_html=True)
 
 with st.sidebar:
     st.markdown("""
-    <div style="
-        border-bottom: 1px solid rgba(99,102,241,0.2);
-    ">
-      <h2 style="
-          font-size:1.2rem; font-weight:700;
-          background: linear-gradient(135deg,#6366f1,#a78bfa);
-          -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-          background-clip:text; margin:0;
-      ">⚡ Generate New Blog</h2>
+    <div class="sidebar-header">
+      ⚡ Generate New Blog
     </div>
     """, unsafe_allow_html=True)
 
@@ -353,13 +614,13 @@ with st.sidebar:
         placeholder="e.g. How Transformer attention works…",
     )
     as_of = st.date_input("📅 As of date", value=date.today())
-    run_btn = st.button("🚀 Generate Blog", type="primary")
+    run_btn = st.button("Generate Blog", type="primary")
 
     st.divider()
     st.markdown("""
-    <p style="font-size:0.85rem; font-weight:600; color:#a5b4fc; margin-bottom:0.5rem;">
-        📚 Past Blogs
-    </p>""", unsafe_allow_html=True)
+    <div style="font-family:'Outfit', sans-serif; font-size:0.9rem; font-weight:600; color:#e2e8f0; margin-bottom:0.5rem; letter-spacing:0.5px; text-transform:uppercase;">
+        📚 Past Databases
+    </div>""", unsafe_allow_html=True)
 
     past_files = list_past_blogs()
     if not past_files:
@@ -387,7 +648,7 @@ with st.sidebar:
         )
         selected_md_file = file_by_label.get(selected_label)
 
-        if st.button("📂 Load selected blog"):
+        if st.button("Load selected blog"):
             if selected_md_file:
                 md_text = read_md_file(selected_md_file)
                 # Load into session_state as if it were a run output
@@ -400,6 +661,8 @@ with st.sidebar:
                 # also update the topic input to the title (best-effort) without changing UI
                 st.session_state["topic_prefill"] = extract_title_from_md(md_text, selected_md_file.stem)
 
+    st.divider()
+    st.markdown("© 2026 Raman - All rights reserved.")
     
 
 # Keep your topic input as-is; optionally prefill for next run after loading a blog
@@ -470,7 +733,60 @@ if run_btn:
                 "images": len(current_state.get("image_specs", []) or []),
                 "sections_done": len(current_state.get("sections", []) or []),
             }
-            progress_area.json(summary)
+            
+            # Cybernetic dynamic telemetry dashboard
+            mode_val = str(summary.get("mode") or "INITIALIZING").upper()
+            needs_research_val = "YES" if summary.get("needs_research") else "NO"
+            queries_count = len(summary.get("queries") or [])
+            evidence_count = summary.get("evidence_count", 0)
+            tasks_count = summary.get("tasks") if summary.get("tasks") is not None else 0
+            images_count = summary.get("images", 0)
+            sections_done = summary.get("sections_done", 0)
+            
+            progress_html = f"""
+            <div style="
+                background: rgba(255, 255, 255, 0.02);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                border-radius: 14px;
+                padding: 1.5rem;
+                margin-top: 1rem;
+                font-family: 'Outfit', sans-serif;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), inset 0 0 15px rgba(255, 255, 255, 0.01);
+                backdrop-filter: blur(20px);
+            ">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.06); padding-bottom: 0.6rem; margin-bottom: 1.2rem;">
+                    <span style="color: #ffffff; font-weight: 600; font-size: 0.95rem; letter-spacing: 0.5px;">📡 AGENT CORE TELEMETRY</span>
+                    <span style="color: #a5b4fc; font-size: 0.8rem; font-weight: 500;">STREAMING ACTIVE</span>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
+                    <div style="background: rgba(0, 0, 0, 0.15); padding: 0.8rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.04); box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                        <span style="color: #94a3b8; font-size: 0.75rem; display: block; margin-bottom: 4px;">EXECUTION MODE</span>
+                        <span style="color: #e2e8f0; font-size: 1.05rem; font-weight: 600;">{mode_val}</span>
+                    </div>
+                    <div style="background: rgba(0, 0, 0, 0.15); padding: 0.8rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.04); box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                        <span style="color: #94a3b8; font-size: 0.75rem; display: block; margin-bottom: 4px;">RESEARCH ACTIVE</span>
+                        <span style="color: #e2e8f0; font-size: 1.05rem; font-weight: 600;">{needs_research_val}</span>
+                    </div>
+                    <div style="background: rgba(0, 0, 0, 0.15); padding: 0.8rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.04); box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                        <span style="color: #94a3b8; font-size: 0.75rem; display: block; margin-bottom: 4px;">SEARCH QUERIES</span>
+                        <span style="color: #e2e8f0; font-size: 1.05rem; font-weight: 600;">{queries_count}</span>
+                    </div>
+                    <div style="background: rgba(0, 0, 0, 0.15); padding: 0.8rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.04); box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                        <span style="color: #94a3b8; font-size: 0.75rem; display: block; margin-bottom: 4px;">EVIDENCE COUNT</span>
+                        <span style="color: #e2e8f0; font-size: 1.05rem; font-weight: 600;">{evidence_count} items</span>
+                    </div>
+                    <div style="background: rgba(0, 0, 0, 0.15); padding: 0.8rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.04); box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                        <span style="color: #94a3b8; font-size: 0.75rem; display: block; margin-bottom: 4px;">PLAN TASKS</span>
+                        <span style="color: #e2e8f0; font-size: 1.05rem; font-weight: 600;">{tasks_count} tasks</span>
+                    </div>
+                    <div style="background: rgba(0, 0, 0, 0.15); padding: 0.8rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.04); box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                        <span style="color: #94a3b8; font-size: 0.75rem; display: block; margin-bottom: 4px;">SECTIONS WRITTEN</span>
+                        <span style="color: #e2e8f0; font-size: 1.05rem; font-weight: 600;">{sections_done} sections</span>
+                    </div>
+                </div>
+            </div>
+            """
+            progress_area.markdown(progress_html, unsafe_allow_html=True)
 
             log(f"[{kind}] {json.dumps(payload, default=str)[:1200]}")
 
@@ -620,20 +936,23 @@ if out:
         st.text_area("Event log", value="\n\n".join(st.session_state["logs"][-80:]), height=520)
 else:
     st.markdown("""
-    <div style="
-        margin: 3rem auto;
-        max-width: 600px;
-        text-align: center;
-        padding: 3rem 2rem;
-        background: rgba(99,102,241,0.05);
-        border: 1px solid rgba(99,102,241,0.2);
-        border-radius: 20px;
-    ">
-      <div style="font-size:3.5rem; margin-bottom:1rem;">✍️</div>
-      <h3 style="color:#a5b4fc; font-size:1.4rem; margin-bottom:0.5rem;">Ready to write</h3>
-      <p style="color:#64748b; font-size:0.95rem;">
-          Enter a topic in the sidebar and click
-          <strong style="color:#8b5cf6;">🚀 Generate Blog</strong> to start.
+    <div class="cyber-ready-card">
+      <div class="cyber-ready-icon">✍️</div>
+      <h3 class="cyber-ready-title">Awaiting Topic Input</h3>
+      <p style="font-family: 'Outfit', sans-serif; color: #94a3b8; font-size: 0.95rem; margin-bottom: 1.5rem;">
+        Please specify a topic in the side console to initialize the neural compiler.
       </p>
+      <div style="
+          display: inline-block;
+          padding: 0.5rem 1.2rem;
+          background: rgba(255, 255, 255, 0.02);
+          border: 1px dashed rgba(255, 255, 255, 0.12);
+          border-radius: 8px;
+          font-size: 0.85rem;
+          color: #94a3b8;
+          font-family: 'Outfit', sans-serif;
+      ">
+        STANDBY MODE
+      </div>
     </div>
     """, unsafe_allow_html=True)
