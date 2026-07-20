@@ -142,7 +142,7 @@ User Input (Topic + Date)
 ### 1. Clone & set up environment
 
 ```bash
-git clone <your-repo-url>
+git clone "https://github.com/Raman7072/Medhai"
 cd "blog writing agent"
 
 python -m venv .venv
@@ -284,12 +284,11 @@ Add a `Procfile`:
 ```
 web: streamlit run frontend.py --server.port $PORT --server.address 0.0.0.0
 ```
+### Screenshots
 
----
+![](/images/ss1.png)
 
-## 📄 License
-
-MIT
+![](/images/ss2.png)
 
 ---
 
