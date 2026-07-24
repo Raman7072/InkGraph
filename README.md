@@ -1,7 +1,6 @@
-![GraphLoom Logo](styles/images/graphloom_logo.png)
+![Blog Agent Logo](styles/images/logo.png)
 
 > **An Autonomous, Multi-Agent Technical Blog Generation Engine Powered by LangGraph, Groq and Streamlit.**
-
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![LangGraph](https://img.shields.io/badge/LangGraph-StateGraph-000000?style=for-the-badge&logo=langchain&logoColor=white)](https://langchain-ai.github.io/langgraph/)
@@ -14,9 +13,9 @@
 
 ## 📌 Overview
 
-**GraphLoom** is an enterprise-grade, multi-agent AI system designed to automate deep research, structured outline planning, parallel section drafting, dynamic citation grounding, and technical diagram synthesis for publication-ready blog posts.
+**Blog Agent** is an enterprise-grade, multi-agent AI system designed to automate deep research, structured outline planning, parallel section drafting, dynamic citation grounding, and technical diagram synthesis for publication-ready blog posts.
 
-Unlike single-prompt LLM wrappers, GraphLoom models technical writing as a stateful, cyclical graph execution workflow using **LangGraph**. It routes content requirements dynamically, executes parallel web searches, fans out task workers across structured sub-sections, synthesizes AI visuals or frosted-glass diagrams, and persists all assets to PostgreSQL with a secure multi-user architecture.
+Unlike single-prompt LLM wrappers, Blog Agent models technical writing as a stateful, cyclical graph execution workflow using **LangGraph**. It routes content requirements dynamically, executes parallel web searches, fans out task workers across structured sub-sections, synthesizes AI visuals or frosted-glass diagrams, and persists all assets to PostgreSQL with a secure multi-user architecture.
 
 ---
 
@@ -47,7 +46,7 @@ Unlike single-prompt LLM wrappers, GraphLoom models technical writing as a state
   - User analytics: tracks document counts, image output, registration metrics, and interactive blog loading/deletion.
 
 - 💎 **Cybernetic Glassmorphism Interface**:
-  - Custom dark theme UI (`#0b0d19` palette) built with Streamlit and styled via modular CSS (`styles/style.css`).
+  - Custom dark theme UI (`#060810` palette) built with Streamlit and styled via modular CSS (`styles/style.css`).
   - Real-time agent telemetry stream dashboard providing visibility into node state transitions, search queries, active workers, and generated images.
   - One-click downloads for standalone Markdown files or complete ZIP archives (Markdown + image assets).
 
@@ -83,9 +82,9 @@ graph TD
 
 ## 📊 LangSmith Observability & Tracing
 
-GraphLoom natively integrates **LangSmith** to provide enterprise-grade telemetry, observability, and debugging for complex agentic workflows. Because multi-agent graph execution involves non-deterministic LLM calls, conditional routing, and parallel worker fan-out, LangSmith acts as the core control plane for system diagnostics.
+Blog Agent natively integrates **LangSmith** to provide enterprise-grade telemetry, observability, and debugging for complex agentic workflows. Because multi-agent graph execution involves non-deterministic LLM calls, conditional routing, and parallel worker fan-out, LangSmith acts as the core control plane for system diagnostics.
 
-### 🔍 How LangSmith is Used in GraphLoom:
+### 🔍 How LangSmith is Used in Blog Agent:
 
 1. **State Graph Execution Tracing**:
    - Captures the complete execution tree of the LangGraph state machine from `START` to `END`.
@@ -112,20 +111,21 @@ GraphLoom natively integrates **LangSmith** to provide enterprise-grade telemetr
 ## 📂 Project Structure
 
 ```
-graphloom/
-├── backend.py            # LangGraph multi-agent backend state machine & node logic
-├── frontend.py           # Streamlit UI, real-time telemetry dashboard & rendering
-├── auth.py               # Database pool, bcrypt authentication, cookie tokens & profile stats
+blog_agent/
+├── backend.py                    # LangGraph multi-agent backend state machine & node logic
+├── frontend.py                   # Streamlit UI, real-time telemetry dashboard & rendering
+├── auth.py                       # Database pool, bcrypt authentication, cookie tokens & profile stats
 ├── styles/
-│   └── style.css         # Frosted glassmorphism dark aesthetic stylesheet
+│   ├── style.css                 # Frosted glassmorphism dark aesthetic stylesheet
+│   └── images/
+│       ├── blog_agent_main_logo.png # Main application logo header (16:9 landscape)
+│       └── blog_agent_logo.png      # App favicon icon
 ├── images/
-│   ├── graphloom_logo.png   # Main application logo header
-│   ├── graphloom_favicon.png# App favicon
-│   ├── ss1.png              # UI telemetry interface screenshot
-│   └── ss2.png              # Generated markdown & image preview screenshot
-├── requirements.txt      # Project dependencies
-├── .env                  # Environment key configuration
-└── README.md             # Project documentation
+│   ├── ss1.png                   # UI telemetry interface screenshot
+│   └── ss2.png                   # Generated markdown & image preview screenshot
+├── requirements.txt              # Project dependencies
+├── .env                          # Environment key configuration
+└── README.md                     # Project documentation
 ```
 
 ---
@@ -153,8 +153,8 @@ graphloom/
 
 Clone the repository and enter the project directory:
 ```bash
-git clone https://github.com/Raman7072/graphloom.git
-cd graphloom
+git clone https://github.com/Raman7072/blog_agent.git
+cd GraphLoom
 ```
 
 Create and activate a virtual environment:
@@ -180,7 +180,7 @@ TAVILY_API_KEY=your_tavily_api_key_here
 HF_TOKEN=your_huggingface_token_here
 
 # Database Configuration
-DB_URL=postgresql://user:password@localhost:5432/graphloom_db
+DB_URL=postgresql://user:password@localhost:5432/blog_agent_db
 
 # Security & Session Secrets
 SESSION_SECRET=your_random_hmac_secret_key_here
@@ -190,14 +190,14 @@ ENVIRONMENT=development
 LANGSMITH_TRACING=true
 LANGSMITH_ENDPOINT="https://api.smith.langchain.com"
 LANGSMITH_API_KEY=your_langsmith_api_key_here
-LANGSMITH_PROJECT='GraphLoom'
+LANGSMITH_PROJECT='BlogAgent'
 ```
 
 ---
 
 ### 4. Database Setup
 
-GraphLoom automatically initializes the required tables (`users`, `blogs`, `blog_images`) on first startup via `auth.init_db()`. Ensure your PostgreSQL database is reachable at the `DB_URL` provided in `.env`.
+Blog Agent automatically initializes the required tables (`users`, `blogs`, `blog_images`) on first startup via `auth.init_db()`. Ensure your PostgreSQL database is reachable at the `DB_URL` provided in `.env`.
 
 ---
 
@@ -208,7 +208,7 @@ Launch the Streamlit web application:
 streamlit run frontend.py
 ```
 
-Open your browser at `http://localhost:8501` to access GraphLoom.
+Open your browser at `http://localhost:8501` to access Blog Agent.
 
 ---
 
@@ -226,4 +226,3 @@ Open your browser at `http://localhost:8501` to access GraphLoom.
 - Session cookies use base64 HMAC-SHA256 signatures with timestamp expiration.
 - Input fields sanitize database query parameters using `psycopg2` parameterized queries.
 - Environment variables isolate private keys (`GROQ_API_KEY`, `TAVILY_API_KEY`, `HF_TOKEN`, `DB_URL`, `LANGSMITH_API_KEY`).
-

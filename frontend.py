@@ -234,8 +234,8 @@ def extract_title_from_md(md: str, fallback: str) -> str:
 # Streamlit UI
 # -----------------------------
 st.set_page_config(
-    page_title="GraphLoom",
-    page_icon="styles/images/logo.png",
+    page_title="Blog Agent",
+    page_icon="styles/images/favicon.png",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -251,7 +251,7 @@ if _AUTH_AVAILABLE:
         pass
 
 # ── Cookie manager (must be initialised before any st.stop()) ────
-_cookie_manager = stx.CookieManager(key="graphloom_cm") if _COOKIES_AVAILABLE else None
+_cookie_manager = stx.CookieManager(key="blogagent_cm") if _COOKIES_AVAILABLE else None
 
 # Helper function to persist session across refreshes and domain environments
 def _set_user_session(user_dict: dict, page: str = "home"):
@@ -266,7 +266,7 @@ def _set_user_session(user_dict: dict, page: str = "home"):
         try:
             exp_date = datetime.now() + timedelta(days=30)
             _cookie_manager.set(
-                "graphloom_session",
+                "blogagent_session",
                 token,
                 expires_at=exp_date,
                 max_age=30 * 24 * 3600,
@@ -274,7 +274,7 @@ def _set_user_session(user_dict: dict, page: str = "home"):
                 key="login_cookie_set"
             )
             _cookie_manager.set(
-                "graphloom_page",
+                "blogagent_page",
                 page,
                 expires_at=exp_date,
                 max_age=30 * 24 * 3600,
@@ -291,8 +291,8 @@ if st.session_state.get("logout_pending"):
         del st.query_params["session"]
     if _COOKIES_AVAILABLE and _cookie_manager:
         try:
-            _cookie_manager.delete("graphloom_session", key="logout_delete_cookie")
-            _cookie_manager.delete("graphloom_page", key="logout_delete_page_cookie")
+            _cookie_manager.delete("blogagent_session", key="logout_delete_cookie")
+            _cookie_manager.delete("blogagent_page", key="logout_delete_page_cookie")
         except Exception:
             pass
 
@@ -304,7 +304,7 @@ if _AUTH_AVAILABLE and "user" not in st.session_state and not st.session_state.g
         try:
             cookies = _cookie_manager.get_all()
             if cookies and isinstance(cookies, dict):
-                _token = cookies.get("graphloom_session")
+                _token = cookies.get("blogagent_session")
         except Exception:
             pass
 
@@ -330,9 +330,9 @@ def _render_auth_page():
             <h1 style="font-family:'Courier',monospace; font-size:2.4rem; font-weight:800;
                 background:linear-gradient(135deg,#a5b4fc 0%,#818cf8 50%,#2dd4bf 100%);
                 -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-                background-clip:text; margin:0 0 0.3rem 0;">GraphLoom</h1>
+                background-clip:text; margin:0 0 0.3rem 0;">Blog Agent</h1>
             <p style="color:#94a3b8; font-family:'Courier',monospace; font-size:0.9rem;
-                letter-spacing:1px; margin:0;">GRAPH-POWERED BLOG GENERATION ENGINE</p>
+                letter-spacing:1px; margin:0;">AI-POWERED BLOG GENERATION ENGINE</p>
         </div>
         """, unsafe_allow_html=True)
 
@@ -394,11 +394,11 @@ def _render_profile_page(user: dict):
     days_active = (now - member_since.replace(tzinfo=timezone.utc)).days if member_since else 0
 
     # ── Back navigation ──────────────────────────────────────
-    if st.button("BACK TO GRAPHLOOM", key="back_from_profile", width="stretch"):
+    if st.button("BACK TO BLOG AGENT", key="back_from_profile", width="stretch"):
         st.session_state["back_to_home_pending"] = True
         if _COOKIES_AVAILABLE and _cookie_manager:
             _cookie_manager.set(
-                "graphloom_page",
+                "blogagent_page",
                 "home",
                 max_age=30 * 24 * 3600,
                 key="back_home_page_cookie_set"
@@ -592,7 +592,7 @@ import base64 as _b64
 
 @st.cache_data
 def _load_logo_b64() -> str:
-    _logo_path = Path("styles/images/graphloom_logo.png")
+    _logo_path = Path("styles/images/logo.png")
     if _logo_path.exists():
         with open(_logo_path, "rb") as _f:
             return _b64.b64encode(_f.read()).decode()
@@ -625,7 +625,7 @@ with st.sidebar:
             st.session_state["profile_pending"] = True
             if _COOKIES_AVAILABLE and _cookie_manager:
                 _cookie_manager.set(
-                    "graphloom_page",
+                    "blogagent_page",
                     "profile",
                     max_age=30 * 24 * 3600,
                     key="profile_page_cookie_set"
@@ -713,7 +713,7 @@ with st.sidebar:
                     st.rerun()
 
     st.divider()
-    st.markdown("© 2026 GraphLoom — All rights reserved.")
+    st.markdown("© 2026 Blog Agent — All rights reserved.")
     
 
 
